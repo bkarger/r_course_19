@@ -1,0 +1,29 @@
+---
+title: "Homework_2"
+author: "Burton Karger"
+date: "9/25/2019"
+output: html_document
+---
+Read data into R which was pulled from lab google drive.
+Include all libraries required for analysis and cleaning
+To read data in I used read_csv from the readr package which is apart of the tidyverse.
+I didn't need to use a skip due to the format of the data and the first row being the column names. 
+```{r, message=FALSE}
+library(tidyverse)
+cfus <- read_csv("/Users/burtonkarger/Documents/r_course_19/Part_One/CFU_Counts.csv",
+                      col_names = TRUE)
+head(cfus, n = 3)
+
+```
+
+```{r, message=FALSE, warning=FALSE}
+ggplot(cfus) +
+  geom_smooth(aes(x = Timepoint, y = CFU, color = Organ)) +
+  theme_classic() +
+  labs(x = "Timepoints (Days)", y = "CFU (colony forming units)") +
+  geom_vline(xintercept = 58) +
+  ggtitle("M. Smegmatis CFU counts for all timepoints")
+```
+
+
+  
