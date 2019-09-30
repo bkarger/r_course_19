@@ -16,7 +16,7 @@ head(cfus, n = 3)
 
 ```
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, error=FALSE}
 ggplot(cfus) +
   geom_smooth(aes(x = Timepoint, y = CFU, color = Organ)) +
   theme_classic() +
