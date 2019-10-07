@@ -1,0 +1,41 @@
+---
+title: "Week_7"
+author: "Burton Karger"
+date: "10/7/2019"
+output: html_document
+---
+
+```{r}
+library(titanic)
+library(stringr)
+data("titanic_train")
+titanic_train %>% 
+  select(Name) %>% 
+  slice(1:3) %>% 
+  separate(Name, c("last_name", "first_name"), sep = ", ")
+
+str_match(titanic_train$Name,
+          ", ([A-Z][a-z]")
+```
+```{r}
+library(babynames)
+library(tidyverse)
+my_name <- filter(babynames, name == "Burton")
+head(my_name)
+
+my_name %>% 
+  ggplot(aes(x = year, y = n, color = sex)) +
+  ggtitle("Burtons over the years", subtitle = "Has not been super cool lately") +
+  labs(y = "Numbers of name per year") +
+  geom_point() +
+  theme_classic()
+```
+Trying to show the most popular names in 1994 for both M and F. 
+```{r}
+babynames %>% 
+  filter(year == 1994) %>% 
+  slice(1:5)
+
+
+```
+

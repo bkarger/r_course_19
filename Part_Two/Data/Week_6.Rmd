@@ -7,11 +7,12 @@ output: html_document
 Reading Data in
 ```{r}
 library(tidyverse)
-country_time <- read_csv("Part_Two/Data/country_timeseries.csv")
+library(knitr)
+country_time <- read_csv("country_timeseries.csv")
 head(country_time, n = 3)
-mex_deaths <- read_csv("Part_Two/Data/mexico_deaths.csv")
+mex_deaths <- read_csv("mexico_deaths.csv")
 head(mex_deaths, n = 3)
-mex_exp <- read_csv("Part_Two/Data/mexico_exposure.csv")
+mex_exp <- read_csv("mexico_exposure.csv")
 head(mex_exp, n = 3)
 ```
 Joining the data using dplyr *_join (Inner: will only keep things that show up in both data sets, full: everything from either data set[adds NA for items that were in one set that don't exist in the other], left: takes everything from first data set and only pulls things from the other data that matches, right)
@@ -36,7 +37,7 @@ library(readr)
 library(lubridate)
 library(dplyr)
 library(ggplot2)
-ebola <- read_csv("Data/country_timeseries.csv")
+ebola <- read_csv("country_timeseries.csv")
 
 ebola <- pivot_longer(data = ebola,
                       cols = Cases_Guinea:Deaths_Mali,
@@ -65,22 +66,27 @@ ggplot(ebola, aes(x = Date, y = Deaths))+
 ```
 Working with the VA death set in R
 
-```{r}
+```{r, eval = TRUE, echo = TRUE}
 data("VADeaths")
+library(tidyverse)
 library(tibble)
-VADeaths %>% 
-  as_tibble() %>% 
-  rownames_to_column(var = "age") %>%
+library(forcats)
+VADeaths %>%
+  as.data.frame() %>% 
+  rownames_to_column(var = "age") %>% 
+  as_tibble() %>%
   pivot_longer(cols = `Rural Male`:`Urban Female`,
                names_to = "variable",
                values_to = "deaths") %>% 
   separate(col = variable, into = c("Local", "Sex"), sep = " ") %>% 
+  mutate(Sex = as_factor(Sex)) %>% 
+  mutate(age = as_factor(age)) %>% 
   ggplot(aes(x = age, y = deaths, color = Sex)) +
   geom_point() +
   ggtitle("Deaths in Virginia Rural vs. Urban") +
   labs(y = "Death #", x = "Age Range") +
   facet_wrap("Local") +
-  theme_bw()
+  theme_bw() 
 ```
 
 
