@@ -1,0 +1,29 @@
+---
+title: "Homework_3"
+author: "Burton Karger"
+date: "10/14/2019"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+```{r}
+library(readr)
+library(tidyverse)
+library(knitr)
+library(rmarkdown)
+cfu <- read_csv("CFU Counts - Sheet1.csv", col_names = TRUE) %>% 
+  as.tibble() %>% 
+  group_by(Mouse) %>% 
+  ggplot(aes(x = Mouse, y = CFU)) +
+  geom_boxplot() +
+  facet_wrap("Organ") +
+  theme_bw() +
+  ggtitle("CFU quantification of Mice organs", subtitle = ("*Mycobacterium smegmatis*"))
+
+cfu
+head(cfu)
+```
+
+

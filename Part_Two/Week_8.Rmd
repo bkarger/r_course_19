@@ -1,0 +1,34 @@
+---
+title: "Week_8"
+author: "Burton Karger"
+date: "10/14/2019"
+output: html_document
+---
+
+```{r}
+library(ggplot2)
+library(ggfortify)
+library(broom)
+library(dlnm)
+data("chicagoNMMAPS")
+chic <- chicagoNMMAPS
+chic
+mod_1 <- lm(dptp ~ temp, data = chic)
+tidy(mod_1)
+
+augment(mod_1) %>% 
+  ggplot(aes(x = temp, y = dptp)) + 
+  geom_point() +
+  geom_line(aes(y = .fitted), color = "red")
+
+autoplot(mod_1)
+
+mod_2 <- glm(dptp ~ temp, data = chic)
+tidy(mod_2)
+
+mod_3 <- lm(pm10 ~ dow, data = chic)
+tidy(mod_3)
+
+anova(mod_3)
+```
+
