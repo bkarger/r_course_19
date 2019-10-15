@@ -15,6 +15,7 @@ library(knitr)
 library(magrittr)
 library(rmarkdown)
 library(stringr)
+library(forcats)
 ```
 
 Quick and dirty plot of Colony forming units from *Mycobacterium smegmatis* per experimental mouse group (1-4).  
@@ -34,8 +35,12 @@ This is graph of the same data as above but with much greater detail. Increased 
 ```{r, message=FALSE, warning=FALSE, error=FALSE}
 cfu_new <- read_csv("CFU Counts - Sheet1.csv", col_names = TRUE) %>% 
   as.tibble() %>% 
+  mutate(Mouse = str_replace(Mouse, "Group1", "Saline"),
+         Mouse = str_replace(Mouse, "Group2", "BCG Only"),
+         Mouse = str_replace(Mouse, "Group3", "Vaccine"),
+         Mouse = str_replace(Mouse, "Group4", "BCG+Vac")) %>% 
   group_by(Mouse) %>% 
-  ggplot(aes(x = Mouse, y = CFU)) +
+  ggplot(aes(x = factor(Mouse, levels = c("Saline", "BCG Only", "Vaccine", "BCG+Vac")), y = CFU)) +
   geom_boxplot() +
   facet_wrap("Organ") +
   theme_bw() +
@@ -46,10 +51,45 @@ cfu_new
 Switching to question #3.
 ```{r}
 library(titanic)
+library(purrr)
 data("titanic_train")
 
 titanic_train %>% 
-  select(Survived, Age) %>% 
-  mutate(Survived, )
+  select(Survived, Age) %>%
+  mutate(Survived = str_replace(Survived, "0", "Dead"),
+         Survived = str_replace(Survived, "1", "Survived")) %>% 
+  filter(!is.na(Age), !is.na(Survived)) %>% 
+  arrange(desc(Age)) %>%
+  mutate(lived = str_detect(Survived, "Survived")) %>% 
+  mutate(died = str_detect(Survived, "Dead"))
+
+```
+Histogram
+```{r}
+titanic_train %>%
+  select(Survived, Age) %>%
+  mutate(Survived = str_replace(Survived, "0", "Dead"),
+         Survived = str_replace(Survived, "1", "Survived")) %>% 
+  filter(!is.na(Age), !is.na(Survived)) %>% 
+  ggplot(aes(x = Age)) +
+  geom_histogram(color = "cornflowerblue", fill = "aliceblue", bins = 30) +
+  ggtitle("Plot of Deaths vs. Survived of Passengers on Titanic") +
+  ylab("Number of Deaths") +
+  facet_wrap(. ~Survived, ncol = 1) +
+  theme_bw()
+```
+Mean Age groups - NA values.
+```{r}
+library(tidyr)
+titanic_train %>%
+  select(Survived, Age) %>%
+  mutate(Survived = str_replace(Survived, "0", "Dead"),
+         Survived = str_replace(Survived, "1", "Survived")) %>% 
+  filter(!is.na(Age), !is.na(Survived)) %>% 
+  pivot_wider(names_from = "Survived",
+              values_from = "Age")
+  
+  
+  
 ```
 
