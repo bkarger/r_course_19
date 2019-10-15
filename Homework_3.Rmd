@@ -49,23 +49,39 @@ cfu_new <- read_csv("CFU Counts - Sheet1.csv", col_names = TRUE) %>%
 cfu_new
 ```
 Switching to question #3.
-```{r}
+```{r message=FALSE, warning=FALSE, error=FALSE}
 library(titanic)
 library(purrr)
 data("titanic_train")
 
-titanic_train %>% 
+Oldest_Lived <- titanic_train %>%
   select(Survived, Age) %>%
   mutate(Survived = str_replace(Survived, "0", "Dead"),
          Survived = str_replace(Survived, "1", "Survived")) %>% 
-  filter(!is.na(Age), !is.na(Survived)) %>% 
-  arrange(desc(Age)) %>%
-  mutate(lived = str_detect(Survived, "Survived")) %>% 
-  mutate(died = str_detect(Survived, "Dead"))
+  mutate(Lived = (str_extract(Survived, "Survived"))) %>% 
+  mutate(Died = (str_extract(Survived, "Dead"))) %>% 
+  select(Age, Lived, Died) %>% 
+  arrange(desc(Age)) %>% 
+  arrange(Lived) %>% 
+  select(Age, Lived) %>% 
+  slice(1:5)
+Oldest_Died <- titanic_train %>%
+  select(Survived, Age) %>%
+  mutate(Survived = str_replace(Survived, "0", "Dead"),
+         Survived = str_replace(Survived, "1", "Survived")) %>% 
+  mutate(Lived = (str_extract(Survived, "Survived"))) %>% 
+  mutate(Died = (str_extract(Survived, "Dead"))) %>% 
+  select(Age, Lived, Died) %>% 
+  arrange(desc(Age)) %>% 
+  arrange(Died) %>% 
+  select(Age, Died) %>% 
+  slice(1:5)  
 
+Oldest_dead_live <- full_join(Oldest_Lived, Oldest_Died)  
+Oldest_dead_live
 ```
 Histogram
-```{r}
+```{r message=FALSE, warning=FALSE, error=FALSE}
 titanic_train %>%
   select(Survived, Age) %>%
   mutate(Survived = str_replace(Survived, "0", "Dead"),
@@ -79,17 +95,31 @@ titanic_train %>%
   theme_bw()
 ```
 Mean Age groups - NA values.
-```{r}
-library(tidyr)
-titanic_train %>%
+```{r message=FALSE, warning=FALSE, error=FALSE}
+Oldest_Lived <- titanic_train %>%
   select(Survived, Age) %>%
   mutate(Survived = str_replace(Survived, "0", "Dead"),
          Survived = str_replace(Survived, "1", "Survived")) %>% 
-  filter(!is.na(Age), !is.na(Survived)) %>% 
-  pivot_wider(names_from = "Survived",
-              values_from = "Age")
-  
-  
-  
+  mutate(Lived = (str_extract(Survived, "Survived"))) %>% 
+  mutate(Died = (str_extract(Survived, "Dead"))) %>% 
+  select(Age, Lived, Died) %>% 
+  arrange(desc(Age)) %>% 
+  arrange(Lived) %>% 
+  select(Age, Lived) %>% 
+  slice(1:5)
+Oldest_Died <- titanic_train %>%
+  select(Survived, Age) %>%
+  mutate(Survived = str_replace(Survived, "0", "Dead"),
+         Survived = str_replace(Survived, "1", "Survived")) %>% 
+  mutate(Lived = (str_extract(Survived, "Survived"))) %>% 
+  mutate(Died = (str_extract(Survived, "Dead"))) %>% 
+  select(Age, Lived, Died) %>% 
+  arrange(desc(Age)) %>% 
+  arrange(Died) %>% 
+  select(Age, Died) %>% 
+  slice(1:5)  
+
+Oldest_dead_live <- full_join(Oldest_Lived, Oldest_Died)  
+Oldest_dead_live
 ```
 
