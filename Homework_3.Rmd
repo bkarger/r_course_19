@@ -53,32 +53,13 @@ Switching to question #3.
 library(titanic)
 library(purrr)
 data("titanic_train")
-
-Oldest_Lived <- titanic_train %>%
+titanic_train %>%
   select(Survived, Age) %>%
   mutate(Survived = str_replace(Survived, "0", "Dead"),
-         Survived = str_replace(Survived, "1", "Survived")) %>% 
-  mutate(Lived = (str_extract(Survived, "Survived"))) %>% 
-  mutate(Died = (str_extract(Survived, "Dead"))) %>% 
-  select(Age, Lived, Died) %>% 
-  arrange(desc(Age)) %>% 
-  arrange(Lived) %>% 
-  select(Age, Lived) %>% 
-  slice(1:5)
-Oldest_Died <- titanic_train %>%
-  select(Survived, Age) %>%
-  mutate(Survived = str_replace(Survived, "0", "Dead"),
-         Survived = str_replace(Survived, "1", "Survived")) %>% 
-  mutate(Lived = (str_extract(Survived, "Survived"))) %>% 
-  mutate(Died = (str_extract(Survived, "Dead"))) %>% 
-  select(Age, Lived, Died) %>% 
-  arrange(desc(Age)) %>% 
-  arrange(Died) %>% 
-  select(Age, Died) %>% 
-  slice(1:5)  
-
-Oldest_dead_live <- full_join(Oldest_Lived, Oldest_Died)  
-Oldest_dead_live
+         Survived = str_replace(Survived, "1", "Survived")) %>%
+  group_by(Survived) %>% 
+  arrange(Survived, Age) %>% 
+  top_n(5, Age)
 ```
 Histogram
 ```{r message=FALSE, warning=FALSE, error=FALSE}
@@ -96,30 +77,6 @@ titanic_train %>%
 ```
 Mean Age groups - NA values.
 ```{r message=FALSE, warning=FALSE, error=FALSE}
-Oldest_Lived <- titanic_train %>%
-  select(Survived, Age) %>%
-  mutate(Survived = str_replace(Survived, "0", "Dead"),
-         Survived = str_replace(Survived, "1", "Survived")) %>% 
-  mutate(Lived = (str_extract(Survived, "Survived"))) %>% 
-  mutate(Died = (str_extract(Survived, "Dead"))) %>% 
-  select(Age, Lived, Died) %>% 
-  arrange(desc(Age)) %>% 
-  arrange(Lived) %>% 
-  select(Age, Lived) %>% 
-  slice(1:5)
-Oldest_Died <- titanic_train %>%
-  select(Survived, Age) %>%
-  mutate(Survived = str_replace(Survived, "0", "Dead"),
-         Survived = str_replace(Survived, "1", "Survived")) %>% 
-  mutate(Lived = (str_extract(Survived, "Survived"))) %>% 
-  mutate(Died = (str_extract(Survived, "Dead"))) %>% 
-  select(Age, Lived, Died) %>% 
-  arrange(desc(Age)) %>% 
-  arrange(Died) %>% 
-  select(Age, Died) %>% 
-  slice(1:5)  
 
-Oldest_dead_live <- full_join(Oldest_Lived, Oldest_Died)  
-Oldest_dead_live
 ```
 
