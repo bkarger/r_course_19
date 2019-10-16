@@ -21,19 +21,17 @@ library(forcats)
 Quick and dirty plot of Colony forming units from *Mycobacterium smegmatis* per experimental mouse group (1-4).  
 This graph has clear labels to denote the x and y axes and a legend that denotes organ by color. There is a fair proportion of data to ink used in this plot. Though due to overlap it is difficult to distinguish where some points fall even though they are colored quite clearly. The geom_point option allows for clear visual of the max and minimums for each group. There is order in the graph by going in ascending group order since we are use to thinking about what each group is testing for, Gp 1 being saline, Gp2 being standard BCG, Gp3 being the test vaccine, and Gp4 being BCG+test vaccine.
 ```{r,message=FALSE, warning=FALSE, error=FALSE}
-cfu_old <- read_csv("CFU Counts - Sheet1.csv", col_names = TRUE) %>% 
+read_csv("CFU Counts - Sheet1.csv", col_names = TRUE) %>% 
   as.tibble %>% 
   group_by(Mouse) %>% 
   ggplot(aes(x = Mouse, y = CFU, color = Organ)) +
   geom_point() +
   ylab("Colony Forming Unit #")
-
-cfu_old
 ```
   
 This is graph of the same data as above but with much greater detail. Increased data density by using a facet_wrap call to graph both organs (lung and spleen) in the same area occupied by the overlapping graph which used color to denote organ infiltration by bacilli, instead here we used small multiples. Using a minimal, theme_bw, we are able to clearly see an outlier in Group3 for the spleen organ that has a substantial lower CFU burden compared to the rest of it's group.This theme option removes things like a dark background not necessarily needed when viewing data in Rstudio or other forms on the computer. A title of the overall data was added using ggtitle, along with a subtitile to provide some more information about the bacteria that we are referring to with "CFUs". Porbably the most important alteration was the use of a boxplot graph instead of scatter plot to denote the data as it clusters the groups for easier visualization. 
 ```{r, message=FALSE, warning=FALSE, error=FALSE}
-cfu_new <- read_csv("CFU Counts - Sheet1.csv", col_names = TRUE) %>% 
+read_csv("CFU Counts - Sheet1.csv", col_names = TRUE) %>% 
   as.tibble() %>% 
   mutate(Mouse = str_replace(Mouse, "Group1", "Saline"),
          Mouse = str_replace(Mouse, "Group2", "BCG Only"),
@@ -41,15 +39,14 @@ cfu_new <- read_csv("CFU Counts - Sheet1.csv", col_names = TRUE) %>%
          Mouse = str_replace(Mouse, "Group4", "BCG+Vac")) %>% 
   group_by(Mouse) %>% 
   ggplot(aes(x = factor(Mouse, levels = c("Saline", "BCG Only", "Vaccine", "BCG+Vac")), y = CFU)) +
-  geom_boxplot() +
+  geom_boxplot(color = "purple") +
   facet_wrap("Organ") +
   theme_bw() +
   ggtitle("CFU quantification of Mice organs", subtitle = ("*Mycobacterium smegmatis*")) +
-  labs(x = "Mouse (5 per group)", y = "Colony Forming Unit (log)") 
-cfu_new
+  labs(x = "Mouse (5 per group)", y = "Colony Forming Unit (log)")
 ```
-Switching to question #3.
-```{r message=FALSE, warning=FALSE, error=FALSE}
+Top 5 Dead/Survived.
+```{r, message=FALSE, warning=FALSE, error=FALSE}
 library(titanic)
 library(purrr)
 data("titanic_train")
@@ -62,7 +59,7 @@ titanic_train %>%
   top_n(5, Age)
 ```
 Histogram
-```{r message=FALSE, warning=FALSE, error=FALSE}
+```{r, message=FALSE, warning=FALSE, error=FALSE}
 titanic_train %>%
   select(Survived, Age) %>%
   mutate(Survived = str_replace(Survived, "0", "Dead"),
@@ -76,13 +73,18 @@ titanic_train %>%
   theme_bw()
 ```
 Mean Age groups - NA values.
-```{r message=FALSE, warning=FALSE, error=FALSE}
-titanic_train %>%
+```{r, message=FALSE, warning=FALSE, error=FALSE}
+df <- titanic_train %>%
   select(Survived, Age) %>%
   mutate(Survived = str_replace(Survived, "0", "Dead"),
          Survived = str_replace(Survived, "1", "Survived")) %>%
   group_by(Survived) %>% 
   mutate(NA_Values = is.na(Age)) %>%
-  summarize(Mean_Age = mean(Age, na.rm = TRUE), total_number = n(), sum(NA_Values))
+  summarize(Mean_Age = mean(Age, na.rm = TRUE), total_number = n(), NA_Values = sum(NA_Values)) 
+df
+```
+Testing difference in means using a ttest. 
+```{r, message=FALSE, warning=FALSE, error=FALSE}
+t.test(df$Mean_Age)
 ```
 
