@@ -85,6 +85,17 @@ df
 ```
 Testing difference in means using a ttest. 
 ```{r, message=FALSE, warning=FALSE, error=FALSE}
-t.test(df$Mean_Age)
+t.test(Age ~ Survived, titanic_train)
+```
+Questions 4.
+```{r}
+library(stringr)
+read_delim("words.txt", delim = "space") %>% 
+  as.tibble() %>% 
+  rename(words = `2`) %>% 
+  filter(words == str_extract_all(words, pattern = "[\\<Mm].{8}"))
+  
+
+
 ```
 
