@@ -77,6 +77,12 @@ titanic_train %>%
 ```
 Mean Age groups - NA values.
 ```{r message=FALSE, warning=FALSE, error=FALSE}
-
+titanic_train %>%
+  select(Survived, Age) %>%
+  mutate(Survived = str_replace(Survived, "0", "Dead"),
+         Survived = str_replace(Survived, "1", "Survived")) %>%
+  group_by(Survived) %>% 
+  mutate(NA_Values = is.na(Age)) %>%
+  summarize(Mean_Age = mean(Age, na.rm = TRUE), total_number = n(), sum(NA_Values))
 ```
 
