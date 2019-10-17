@@ -88,14 +88,23 @@ Testing difference in means using a ttest.
 t.test(Age ~ Survived, titanic_train)
 ```
 Questions 4.
-```{r}
+```{r, message=FALSE, warning=FALSE, error=FALSE}
 library(stringr)
+library(stringi)
+library(purrr)
+library(listviewer)
+
 read_delim("words.txt", delim = "space") %>% 
-  as.tibble() %>% 
+  as_tibble() %>% 
   rename(words = `2`) %>% 
-  filter(words == str_extract_all(words, pattern = "[\\<Mm].{8}"))
-  
-
-
+  filter(words == str_extract_all(words, pattern = "[\\<M].{7}|[\\<m]^m.{7}")) %>%
+  mutate(first_word = stri_sub(words, from = 1, to = 4),
+         second_word = stri_sub(words, from = 5, to = 8),
+         first_letter = stri_sub(second_word, from = 1, to = 1),
+         restofword = stri_sub(second_word, from = 2, to = 4),
+         pasted_2ndword = paste(restofword, first_letter, sep = ""),
+         pasted_whole2ndword = paste(first_word, pasted_2ndword, sep ="")) %>% 
+  select(words, pasted_whole2ndword) %>% 
+  distinct() 
 ```
 
