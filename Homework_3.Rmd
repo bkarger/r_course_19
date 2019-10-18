@@ -97,7 +97,7 @@ m_eight_letters <- whole_words %>%
   as_tibble() %>% 
   rename(words = `2`) %>% 
   mutate(words = str_to_lower(words)) %>% 
-  filter(words == str_extract_all(words, pattern = "[\\<m].[^m]{7}")) %>%
+  filter(words == str_extract_all(words, pattern = "[\\<m].[^m]{6}")) %>%
   mutate(first_word = stri_sub(words, from = 1, to = 4),
          second_word = stri_sub(words, from = 5, to = 8),
          first_letter = stri_sub(second_word, from = 1, to = 1),
@@ -111,6 +111,6 @@ m_eight_letters %>%
   mutate(trying_matching = str_detect(m_eight_letters, pasted_2ndword)) %>%
   group_by(trying_matching) %>% 
   filter(trying_matching == TRUE) 
-
+m_eight_letters
 ```
 
