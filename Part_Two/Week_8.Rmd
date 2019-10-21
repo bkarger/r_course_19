@@ -64,15 +64,46 @@ atlas1006 %>%
                                  mean())) %>% 
   unnest(mean_prevalence)
 ```
+In course 7.8.6
 ```{r}
 library(nycflights13)
+library(tidyverse)
+library(dlnm)
+
+flights_1 <- nycflights13::flights %>% 
+  select(dep_delay, hour, carrier, origin) %>% 
+  filter(origin == "LGA",
+         dep_delay != is.na(dep_delay)) %>% 
+  mutate(late_dep = dep_delay > 15)
+
+flights_1 %>% 
+  purrr::pluck("late_dep") %>% 
+  mean()
 
 nycflights13::flights %>% 
   select(dep_delay, hour, carrier, origin) %>% 
   filter(origin == "LGA",
          dep_delay != is.na(dep_delay)) %>% 
   mutate(late_dep = dep_delay > 15) %>% 
-  
-  
+  group_by(hour) %>% 
+  summarize(prob_late = mean(late_dep)) %>% 
+  ggplot(aes(x = hour, y = prob_late)) +
+  geom_point()
+
+glm(late_dep ~ hour, data = flights_1, family = binomial(link = "logit")) %>%
+  tidy() %>% 
+  filter(term == "hour") %>% 
+  mutate(or = exp(estimate))
+
+nested_flights <- flights_1 %>% 
+  group_by(carrier) %>% 
+  nest() %>% 
+  mutate(glm_result = map(data, ~glm(late_dep ~ hour, data = .x, family = binomial(link = "logit")))) %>% 
+  mutate(glm_reults_tidy = map(glm_result, ~tidy(.x))) %>% 
+  select(-data, -glm_result) %>% 
+  unnest(glm_reults_tidy) %>% 
+  filter(term == "hour") %>% 
+  mutate(or = exp(estimate))
+
 ```
 

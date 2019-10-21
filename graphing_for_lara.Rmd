@@ -1,0 +1,46 @@
+---
+title: "Simple_Graphing"
+output:
+  pdf_document: default
+  word_document: default
+  html_document:
+    df_print: paged
+---
+Always start your R scripts/markdowns (which is what this is) with all the librarys your code will require. In this case we need dplyr, ggplot, readr, and I'm sure we will add more.
+```{r, message=FALSE, warning=FALSE, error=FALSE}
+#This is a code block, don't worry about it now but this is what separates normal txt like 
+#above from actually executable R code. 
+#Anything with a hashtag like the sentence above and this one will be ignored if it appears 
+#in a code block, allows annotating of specic functions, variables, etc. 
+library(dplyr)
+library(readr)
+library(ggplot2)
+```
+Here you get your data into R and do any cleaning required. I made up some data to mimic some plaque assays, I'm sure they are ridiculous but they will do the job.
+```{r, message=FALSE, warning=FALSE, error=FALSE}
+pfu_data <- read_csv("../Documents/sample_data_pfu_curve.csv", col_names = TRUE)
+#Print the data to check it was pulled in correctly.
+#I made this tidy data already, but we could add some more detail, 
+#but we can do that in the plotting options.
+pfu_data %>%
+  as_tibble()
+```
+Now we will plot the data using the Grammar of Graphics library (like matplotlib from python) or also referred to as ggplot! All the tools we are using and will use are a part of the tidyverse and act as lego bricks fitting together when used on similar data in the format called a tibble, which is just a special table. I converted the .csv file that we read into from a data.frame to a tibble() in the code chunk above. 
+```{r, message=FALSE, warning=FALSE, error=FALSE}
+pfu_data %>% 
+  ggplot(aes(x = Time_Point, y = PFU, color = Virus)) +
+  geom_smooth()
+
+ggplot(data = pfu_data, mapping = aes(x = Time_Point, y = PFU)) +
+  facet_wrap("Virus")+
+  geom_smooth()
+```
+Just like that you have your curves! There are many things we can do to this graph from changing the actually type (i.e scatter, line, boxplot, histogram, etc.) with different geoms_*. Change the colors, the layouts, give it a title, give the axes more detail.  _Like below!_
+```{r, message=FALSE, warning=FALSE, error=FALSE}
+pfu_data %>% 
+  ggplot(aes(x = Time_Point, y = PFU, color = Virus)) +
+  theme_bw() +
+  ggtitle("Growth Curve for Three Viruses", subtitle = "Over 15 days") +
+  labs(x = "Days post infection", y = "Plaque forming units") +
+  geom_smooth()
+```

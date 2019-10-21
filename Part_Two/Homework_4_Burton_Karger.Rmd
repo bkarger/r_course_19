@@ -1,0 +1,23 @@
+---
+title: "Homework_4"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+
+homicides <- read_csv("homicide-data.csv", col_names = TRUE) %>% 
+  as_tibble() %>% 
+  unite(col = "city_state", city, state, sep = ",", remove = TRUE) %>% 
+  print()
+```
+```{r}
+unsolved <- homicides %>% 
+  group_by(disposition, city_state) %>%
+  summarize(total = n()) %>% 
+  print()
+```
+
