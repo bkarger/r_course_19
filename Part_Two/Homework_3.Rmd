@@ -91,7 +91,7 @@ t.test(Age ~ Survived, titanic_train)
 ```
 Questions 4.
 ```{r, message=FALSE, warning=FALSE, error=FALSE}
-whole_words <- read_delim("words.txt", delim = " ")
+whole_words <- read_delim("../words.txt", delim = " ")
 
 df <- whole_words %>% 
   as_tibble() %>% 

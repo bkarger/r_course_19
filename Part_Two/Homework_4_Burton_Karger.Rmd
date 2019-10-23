@@ -5,19 +5,23 @@ output: html_document
 
 ```{r}
 library(tidyverse)
+library(tidyr)
 ```
 
 ```{r}
 
 homicides <- read_csv("homicide-data.csv", col_names = TRUE) %>% 
   as_tibble() %>% 
-  unite(col = "city_state", city, state, sep = ",", remove = TRUE) %>% 
+  unite(col = "city_state", city, state, sep = ",") %>% 
   print()
 ```
 ```{r}
 unsolved <- homicides %>% 
-  group_by(disposition, city_state) %>%
-  summarize(total = n()) %>% 
+  mutate(arrests = str_extract(disposition, "Closed by arrest"),
+         pending = str_extract(disposition, "Open/No arrest"),
+         no_arrest = str_extract(disposition, "Closed without arrest")) %>% 
+  group_by(city_state) %>%
+  select(city_state, arrests, pending, no_arrest) %>% 
   print()
 ```
 
