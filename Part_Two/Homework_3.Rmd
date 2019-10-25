@@ -3,9 +3,9 @@ title: "Homework_3"
 author: "Burton Karger"
 date: "10/14/2019"
 output:
-  pdf_document: default
-  html_document: default
   word_document: default
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r,message=FALSE, warning=FALSE, error=FALSE}

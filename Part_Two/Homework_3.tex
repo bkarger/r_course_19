@@ -1,0 +1,347 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Homework\_3},
+            pdfauthor={Burton Karger},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Homework\_3}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Burton Karger}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{10/14/2019}
+
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(readr)}
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(knitr)}
+\KeywordTok{library}\NormalTok{(magrittr)}
+\KeywordTok{library}\NormalTok{(rmarkdown)}
+\KeywordTok{library}\NormalTok{(titanic)}
+\KeywordTok{library}\NormalTok{(purrr)}
+\KeywordTok{library}\NormalTok{(stringr)}
+\KeywordTok{library}\NormalTok{(forcats)}
+\KeywordTok{library}\NormalTok{(stringi)}
+\KeywordTok{library}\NormalTok{(listviewer)}
+\end{Highlighting}
+\end{Shaded}
+
+Quick and dirty plot of Colony forming units from \emph{Mycobacterium
+smegmatis} per experimental mouse group (1-4).\\
+This graph has clear labels to denote the x and y axes and a legend that
+denotes organ by color. There is a fair proportion of data to ink used
+in this plot. Though due to overlap it is difficult to distinguish where
+some points fall even though they are colored quite clearly. The
+geom\_point option allows for clear visual of the max and minimums for
+each group. There is order in the graph by going in ascending group
+order since we are use to thinking about what each group is testing for,
+Gp 1 being saline, Gp2 being standard BCG, Gp3 being the test vaccine,
+and Gp4 being BCG+test vaccine.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{read_csv}\NormalTok{(}\StringTok{"CFU Counts - Sheet1.csv"}\NormalTok{, }\DataTypeTok{col_names =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{as_tibble }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Mouse) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Mouse, }\DataTypeTok{y =}\NormalTok{ CFU, }\DataTypeTok{color =}\NormalTok{ Organ)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Colony Forming Unit #"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Homework_3_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+This is graph of the same data as above but with much greater detail.
+Increased data density by using a facet\_wrap call to graph both organs
+(lung and spleen) in the same area occupied by the overlapping graph
+which used color to denote organ infiltration by bacilli, instead here
+we used small multiples. Using a minimal, theme\_bw, we are able to
+clearly see an outlier in Group3 for the spleen organ that has a
+substantial lower CFU burden compared to the rest of it's group.This
+theme option removes things like a dark background not necessarily
+needed when viewing data in Rstudio or other forms on the computer. A
+title of the overall data was added using ggtitle, along with a
+subtitile to provide some more information about the bacteria that we
+are referring to with ``CFUs''. Porbably the most important alteration
+was the use of a boxplot graph instead of scatter plot to denote the
+data as it clusters the groups for easier visualization.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{read_csv}\NormalTok{(}\StringTok{"CFU Counts - Sheet1.csv"}\NormalTok{, }\DataTypeTok{col_names =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{as.tibble}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Mouse =} \KeywordTok{str_replace}\NormalTok{(Mouse, }\StringTok{"Group1"}\NormalTok{, }\StringTok{"Saline"}\NormalTok{),}
+         \DataTypeTok{Mouse =} \KeywordTok{str_replace}\NormalTok{(Mouse, }\StringTok{"Group2"}\NormalTok{, }\StringTok{"BCG Only"}\NormalTok{),}
+         \DataTypeTok{Mouse =} \KeywordTok{str_replace}\NormalTok{(Mouse, }\StringTok{"Group3"}\NormalTok{, }\StringTok{"Vaccine"}\NormalTok{),}
+         \DataTypeTok{Mouse =} \KeywordTok{str_replace}\NormalTok{(Mouse, }\StringTok{"Group4"}\NormalTok{, }\StringTok{"BCG+Vac"}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Mouse) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{factor}\NormalTok{(Mouse, }\DataTypeTok{levels =} \KeywordTok{c}\NormalTok{(}\StringTok{"Saline"}\NormalTok{, }\StringTok{"BCG Only"}\NormalTok{, }\StringTok{"Vaccine"}\NormalTok{, }\StringTok{"BCG+Vac"}\NormalTok{)), }\DataTypeTok{y =}\NormalTok{ CFU)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{color =} \StringTok{"cornflowerblue"}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"aliceblue"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{facet_wrap}\NormalTok{(}\StringTok{"Organ"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_bw}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"CFU quantification of Mice organs"}\NormalTok{, }\DataTypeTok{subtitle =}\NormalTok{ (}\StringTok{"*Mycobacterium smegmatis*"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"Mouse (5 per group)"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Colony Forming Unit (log)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Homework_3_files/figure-latex/unnamed-chunk-3-1.pdf}
+Top 5 Dead/Survived.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"titanic_train"}\NormalTok{)}
+\NormalTok{titanic_train }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(Survived, Age) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Survived =} \KeywordTok{str_replace}\NormalTok{(Survived, }\StringTok{"0"}\NormalTok{, }\StringTok{"Dead"}\NormalTok{),}
+         \DataTypeTok{Survived =} \KeywordTok{str_replace}\NormalTok{(Survived, }\StringTok{"1"}\NormalTok{, }\StringTok{"Survived"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Survived) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(Survived, Age) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{top_n}\NormalTok{(}\DecValTok{5}\NormalTok{, Age)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 11 x 2
+## # Groups:   Survived [2]
+##    Survived   Age
+##    <chr>    <dbl>
+##  1 Dead      70  
+##  2 Dead      70  
+##  3 Dead      70.5
+##  4 Dead      71  
+##  5 Dead      71  
+##  6 Dead      74  
+##  7 Survived  62  
+##  8 Survived  62  
+##  9 Survived  63  
+## 10 Survived  63  
+## 11 Survived  80
+\end{verbatim}
+
+Histogram
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic_train }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(Survived, Age) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Survived =} \KeywordTok{str_replace}\NormalTok{(Survived, }\StringTok{"0"}\NormalTok{, }\StringTok{"Dead"}\NormalTok{),}
+         \DataTypeTok{Survived =} \KeywordTok{str_replace}\NormalTok{(Survived, }\StringTok{"1"}\NormalTok{, }\StringTok{"Survived"}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(Age), }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(Survived)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Age)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{color =} \StringTok{"cornflowerblue"}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"aliceblue"}\NormalTok{, }\DataTypeTok{bins =} \DecValTok{30}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Plot of Deaths vs. Survived of Passengers on Titanic"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Number of Deaths"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{facet_wrap}\NormalTok{(. }\OperatorTok{~}\NormalTok{Survived, }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Homework_3_files/figure-latex/unnamed-chunk-5-1.pdf}
+Mean Age groups - NA values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df <-}\StringTok{ }\NormalTok{titanic_train }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(Survived, Age) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Survived =} \KeywordTok{str_replace}\NormalTok{(Survived, }\StringTok{"0"}\NormalTok{, }\StringTok{"Dead"}\NormalTok{),}
+         \DataTypeTok{Survived =} \KeywordTok{str_replace}\NormalTok{(Survived, }\StringTok{"1"}\NormalTok{, }\StringTok{"Survived"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Survived) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{NA_Values =} \KeywordTok{is.na}\NormalTok{(Age)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{Mean_Age =} \KeywordTok{mean}\NormalTok{(Age, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }\DataTypeTok{total_number =} \KeywordTok{n}\NormalTok{(), }\DataTypeTok{NA_Values =} \KeywordTok{sum}\NormalTok{(NA_Values)) }
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 4
+##   Survived Mean_Age total_number NA_Values
+##   <chr>       <dbl>        <int>     <int>
+## 1 Dead         30.6          549       125
+## 2 Survived     28.3          342        52
+\end{verbatim}
+
+Testing difference in means using a ttest.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(Age }\OperatorTok{~}\StringTok{ }\NormalTok{Survived, titanic_train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  Age by Survived
+## t = 2.046, df = 598.84, p-value = 0.04119
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0.09158472 4.47339446
+## sample estimates:
+## mean in group 0 mean in group 1 
+##        30.62618        28.34369
+\end{verbatim}
+
+Questions 4.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{whole_words <-}\StringTok{ }\KeywordTok{read_delim}\NormalTok{(}\StringTok{"../words.txt"}\NormalTok{, }\DataTypeTok{delim =} \StringTok{" "}\NormalTok{)}
+
+\NormalTok{df <-}\StringTok{ }\NormalTok{whole_words }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{as_tibble}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{words =} \StringTok{`}\DataTypeTok{2}\StringTok{`}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{words =} \KeywordTok{str_to_lower}\NormalTok{(words)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(words }\OperatorTok{==}\StringTok{ }\KeywordTok{str_extract_all}\NormalTok{(words, }\DataTypeTok{pattern =} \StringTok{"^m.\{7\}"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{first_word =} \KeywordTok{stri_sub}\NormalTok{(words, }\DataTypeTok{from =} \DecValTok{1}\NormalTok{, }\DataTypeTok{to =} \DecValTok{4}\NormalTok{),}
+         \DataTypeTok{second_word =} \KeywordTok{stri_sub}\NormalTok{(words, }\DataTypeTok{from =} \DecValTok{5}\NormalTok{, }\DataTypeTok{to =} \DecValTok{8}\NormalTok{),}
+         \DataTypeTok{first_letter =} \KeywordTok{stri_sub}\NormalTok{(second_word, }\DataTypeTok{from =} \DecValTok{4}\NormalTok{, }\DataTypeTok{to =} \DecValTok{4}\NormalTok{),}
+         \DataTypeTok{restofword =} \KeywordTok{stri_sub}\NormalTok{(second_word, }\DataTypeTok{from =} \DecValTok{1}\NormalTok{, }\DataTypeTok{to =} \DecValTok{3}\NormalTok{),}
+         \DataTypeTok{pasted_2ndword =} \KeywordTok{paste}\NormalTok{( first_letter, restofword, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{original =}\NormalTok{ words) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{distinct}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(first_word, pasted_2ndword) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{semi_join}\NormalTok{(whole_words, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"first_word"}\NormalTok{ =}\StringTok{ "2"}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{semi_join}\NormalTok{(whole_words, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"pasted_2ndword"}\NormalTok{ =}\StringTok{ "2"}\NormalTok{))}
+
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 114 x 2
+##    first_word pasted_2ndword
+##    <chr>      <chr>         
+##  1 made       alen          
+##  2 made       alin          
+##  3 maha       amay          
+##  4 mail       sing          
+##  5 mail       slot          
+##  6 majo       erat          
+##  7 majo       grin          
+##  8 malm       ties          
+##  9 malt       ties          
+## 10 mand       sala          
+## # ... with 104 more rows
+\end{verbatim}
+
+
+\end{document}

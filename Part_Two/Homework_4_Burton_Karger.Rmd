@@ -34,6 +34,21 @@ balt_prop %>%
   select(estimate, conf.high, conf.low)
 ```
 ```{r}
-
+estimates_unsolved <- unsolved %>% 
+  mutate(results = map2(total_unsolved, total, ~prop.test(.x, .y))) %>% 
+  mutate(results = map(results, ~tidy(.x))) %>% 
+  unnest(.drop = TRUE) %>% 
+  select(city_state:estimate, conf.low, conf.high) %>% 
+  print()
 ```
+```{r}
+estimates_unsolved %>% 
+  ggplot(aes(x = estimate, y = factor(city_state, levels = city_state[order(estimate)]))) +
+  geom_point() +
+  geom_errorbarh(aes(xmax = conf.high, xmin = conf.low, height = 0)) +
+  ggtitle("Unsolved homicides by city", subtitle = "Bars show 95% confidence interval") +
+  theme_dark() 
+```
+
+
 
