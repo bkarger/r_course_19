@@ -3,21 +3,21 @@ title: "Homework_4"
 output: html_document
 ---
 
-```{r}
+```{r, warning=FALSE, message=FALSE, error=FALSE}
 library(tidyverse)
 library(tidyr)
 library(broom)
 library(purrr)
 ```
 
-```{r}
+```{r, warning=FALSE, message=FALSE, error=FALSE}
 
 homicides <- read_csv("homicide-data.csv", col_names = TRUE) %>% 
   as_tibble() %>% 
   unite(col = "city_state", city, state, sep = ",") %>% 
   print()
 ```
-```{r}
+```{r, warning=FALSE, message=FALSE, error=FALSE}
 unsolved <- homicides %>% 
   mutate(unsolved = disposition != "Closed by arrest") %>% 
   group_by(city_state) %>% 
@@ -25,7 +25,7 @@ unsolved <- homicides %>%
   select(city_state, total_unsolved, total) %>% 
   print()
 ```
-```{r}
+```{r, warning=FALSE, message=FALSE, error=FALSE}
 baltimore <- unsolved[3,]
 balt_prop <- prop.test(baltimore$total_unsolved, baltimore$total) %>% 
   tidy()
@@ -33,15 +33,15 @@ balt_prop <- prop.test(baltimore$total_unsolved, baltimore$total) %>%
 balt_prop %>% 
   select(estimate, conf.high, conf.low)
 ```
-```{r}
+```{r, warning=FALSE, message=FALSE, error=FALSE}
 estimates_unsolved <- unsolved %>% 
   mutate(results = map2(total_unsolved, total, ~prop.test(.x, .y))) %>% 
   mutate(results = map(results, ~tidy(.x))) %>% 
   unnest(.drop = TRUE) %>% 
-  select(city_state:estimate, conf.low, conf.high) %>% 
+  select(city_state, estimate, conf.low, conf.high) %>% 
   print()
 ```
-```{r}
+```{r, warning=FALSE, message=FALSE, error=FALSE}
 estimates_unsolved %>% 
   ggplot(aes(x = estimate, y = factor(city_state, levels = city_state[order(estimate)]))) +
   geom_point() +

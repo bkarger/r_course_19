@@ -1,0 +1,53 @@
+---
+title: "Chapter_8"
+output: html_document
+---
+
+```{r}
+library(readr)
+library(magrittr)
+library(tibble)
+library(dplyr)
+library(tidyverse)
+library(lubridate)
+library(stringr)
+```
+
+```{r}
+storms <- read_csv("../Downloads/StormEvents_details-ftp_v1.0_d2017_c20190817.csv.gz",
+                   col_names = TRUE) %>%
+  as.tibble() %>% 
+  select(BEGIN_DATE_TIME, END_DATE_TIME, EPISODE_ID:STATE_FIPS, EVENT_TYPE:CZ_NAME, SOURCE,
+         BEGIN_LAT:END_LAT) %>%
+  mutate(BEGIN_DATE_TIME = dmy_hms(BEGIN_DATE_TIME),
+         END_DATE_TIME = dmy_hms(END_DATE_TIME),
+         STATE = str_to_title(STATE),
+         CZ_NAME = str_to_title(CZ_NAME)) %>%
+  filter(CZ_TYPE == "C") %>%
+  select(-CZ_TYPE) %>% 
+  mutate(STATE_FIPS = str_pad(STATE_FIPS, 2, side = c("left"), pad = "0"),
+         CZ_FIPS = str_pad(CZ_FIPS, 3, side = c("left"), pad = "0")) %>%
+  unite(FIPS, STATE_FIPS, CZ_FIPS, sep = "") %>% 
+  rename_all(funs(str_to_lower(.))) %>% 
+  print()
+```
+
+```{r}
+data("state")
+us_state_info <- data_frame(state = state.name, 
+                            area = state.area,
+                            region = state.region)
+```
+
+```{r}
+storms <- storms %>% 
+  group_by(state) %>% 
+  count() %>% 
+  ungroup() %>% 
+  right_join(us_state_info)
+```
+```{r}
+ggplot(storms) +
+  aes(x = )
+```
+
