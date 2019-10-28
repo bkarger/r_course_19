@@ -41,13 +41,13 @@ estimates_unsolved <- unsolved %>%
   select(city_state, estimate, conf.low, conf.high) %>% 
   print()
 ```
-```{r, warning=FALSE, message=FALSE, error=FALSE}
+```{r, warning=FALSE, message=FALSE, error=FALSE, fig.width=4.5, fig.height=}
 estimates_unsolved %>% 
   ggplot(aes(x = estimate, y = factor(city_state, levels = city_state[order(estimate)]))) +
-  geom_point() +
-  geom_errorbarh(aes(xmax = conf.high, xmin = conf.low, height = 0)) +
+  geom_point(color = "white") +
+  geom_errorbarh(aes(xmax = conf.high, xmin = conf.low, height = 0), color = "white") +
   ggtitle("Unsolved homicides by city", subtitle = "Bars show 95% confidence interval") +
-  theme_dark() 
+  theme_dark()
 ```
 
 
