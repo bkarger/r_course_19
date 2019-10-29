@@ -8,6 +8,7 @@ library(tidyverse)
 library(tidyr)
 library(broom)
 library(purrr)
+library(scales)
 ```
 
 ```{r, warning=FALSE, message=FALSE, error=FALSE}
@@ -41,13 +42,17 @@ estimates_unsolved <- unsolved %>%
   select(city_state, estimate, conf.low, conf.high) %>% 
   print()
 ```
-```{r, warning=FALSE, message=FALSE, error=FALSE, fig.width=4.5, fig.height=}
-estimates_unsolved %>% 
+```{r, warning=FALSE, message=FALSE, error=FALSE, fig.width=5, fig.height=10}
+estimates_unsolved %>%
+  slice(-49) %>% 
   ggplot(aes(x = estimate, y = factor(city_state, levels = city_state[order(estimate)]))) +
   geom_point(color = "white") +
   geom_errorbarh(aes(xmax = conf.high, xmin = conf.low, height = 0), color = "white") +
   ggtitle("Unsolved homicides by city", subtitle = "Bars show 95% confidence interval") +
-  theme_dark()
+  labs(x = "Percent of homicides that are unsolved", y = "") +
+  theme(plot.subtitle = element_text(face = "bold")) +
+  theme_dark() +
+  scale_x_continuous(labels = percent)
 ```
 
 
