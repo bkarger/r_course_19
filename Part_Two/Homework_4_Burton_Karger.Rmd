@@ -2,7 +2,7 @@
 title: "Homework_4"
 output: html_document
 ---
-
+Load required libraries.
 ```{r, warning=FALSE, message=FALSE, error=FALSE}
 library(tidyverse)
 library(tidyr)
@@ -10,7 +10,7 @@ library(broom)
 library(purrr)
 library(scales)
 ```
-
+Read data in, combine city/state columns. 
 ```{r, warning=FALSE, message=FALSE, error=FALSE}
 
 homicides <- read_csv("homicide-data.csv", col_names = TRUE) %>% 
@@ -18,6 +18,7 @@ homicides <- read_csv("homicide-data.csv", col_names = TRUE) %>%
   unite(col = "city_state", city, state, sep = ",") %>% 
   print()
 ```
+Summary of dispostion of cases (closed by arrest, or not).
 ```{r, warning=FALSE, message=FALSE, error=FALSE}
 unsolved <- homicides %>% 
   mutate(unsolved = disposition != "Closed by arrest") %>% 
@@ -26,6 +27,7 @@ unsolved <- homicides %>%
   select(city_state, total_unsolved, total) %>% 
   print()
 ```
+Making frame work for map2 call in which prop.test is applied to each row (city_state). 
 ```{r, warning=FALSE, message=FALSE, error=FALSE}
 baltimore <- unsolved[3,]
 balt_prop <- prop.test(baltimore$total_unsolved, baltimore$total) %>% 
@@ -34,6 +36,7 @@ balt_prop <- prop.test(baltimore$total_unsolved, baltimore$total) %>%
 balt_prop %>% 
   select(estimate, conf.high, conf.low)
 ```
+Applying prop.test and tidying output of statistical analysis. 
 ```{r, warning=FALSE, message=FALSE, error=FALSE}
 estimates_unsolved <- unsolved %>% 
   mutate(results = map2(total_unsolved, total, ~prop.test(.x, .y))) %>% 
@@ -42,6 +45,7 @@ estimates_unsolved <- unsolved %>%
   select(city_state, estimate, conf.low, conf.high) %>% 
   print()
 ```
+Mimicking graph. 
 ```{r, warning=FALSE, message=FALSE, error=FALSE, fig.width=5, fig.height=10}
 estimates_unsolved %>%
   slice(-49) %>% 
