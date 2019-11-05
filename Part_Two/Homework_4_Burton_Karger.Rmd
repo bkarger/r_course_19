@@ -1,6 +1,8 @@
 ---
-title: "Homework_4"
-output: html_document
+title: "Homework 4, Burton Karger"
+output:
+  word_document: default
+  html_document: default
 ---
 Load required libraries.
 ```{r, warning=FALSE, message=FALSE, error=FALSE}
@@ -14,7 +16,6 @@ Read data in, combine city/state columns.
 ```{r, warning=FALSE, message=FALSE, error=FALSE}
 
 homicides <- read_csv("homicide-data.csv", col_names = TRUE) %>% 
-  as_tibble() %>% 
   unite(col = "city_state", city, state, sep = ",") %>% 
   print()
 ```
@@ -46,7 +47,7 @@ estimates_unsolved <- unsolved %>%
   print()
 ```
 Mimicking graph. 
-```{r, warning=FALSE, message=FALSE, error=FALSE, fig.width=5, fig.height=10}
+```{r, warning=FALSE, message=FALSE, error=FALSE, fig.width=5, fig.height=9}
 estimates_unsolved %>%
   slice(-49) %>% 
   ggplot(aes(x = estimate, y = factor(city_state, levels = city_state[order(estimate)]))) +
